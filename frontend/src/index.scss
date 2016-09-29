@@ -1,0 +1,29 @@
+@import 'variables';
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  box-sizing: border-box !important;
+  background: $color-primary-light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+input {
+  padding: 3px;
+  border: 1px solid $gray8;
+  outline: none;
+  font-family: 'Open Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: 0 0 1px rgba(0,0,0,0.3);
+}
+
+app {
+  display: flex;
+  height: 100%;
+}

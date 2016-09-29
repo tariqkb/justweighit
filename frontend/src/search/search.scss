@@ -1,0 +1,40 @@
+@import '../variables';
+
+
+:host {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+}
+
+.results,
+.search {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.search {
+  background: $color-primary;
+  height: 45%;
+}
+.results {
+  background: $gray15;
+  flex: 1;
+}
+
+.title {
+  font-size: 72px;
+  font-weight: 600;
+  color: $white;
+  margin: 30px;
+}
+
+input {
+  width: 60%;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  border: none;
+}
