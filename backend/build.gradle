@@ -1,0 +1,33 @@
+
+buildscript {
+    ext.kotlin_version = '1.0.3'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'application'
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "io.dropwizard:dropwizard-core:1.0.2";
+    compile "io.dropwizard:dropwizard-assets:1.0.2";
+    compile "org.jooq:jooq:3.8.4"
+}
+
+mainClassName = "com.justweighit.Application"
+
+run {
+    args 'server', "$rootProject.projectDir/backend/src/main/resources/config.yml"
+}
