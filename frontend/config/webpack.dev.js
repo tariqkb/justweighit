@@ -24,7 +24,8 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   port: PORT,
   ENV: ENV,
   HMR: HMR,
-  backendUrl: 'http://localhost:8080/'
+  backendUrl: '/backend/',
+  backendSource: 'http://localhost:8080/'
 });
 
 /**
@@ -116,8 +117,9 @@ module.exports = function(options) {
         'process.env': {
           'ENV': JSON.stringify(METADATA.ENV),
           'NODE_ENV': JSON.stringify(METADATA.ENV),
-          'HMR': METADATA.HMR,
-        }
+          'HMR': METADATA.HMR
+        },
+        'BACKEND_URL': JSON.stringify(METADATA.backendUrl),
       }),
 
       /**
@@ -158,7 +160,22 @@ module.exports = function(options) {
         aggregateTimeout: 300,
         poll: 1000
       },
-      outputPath: helpers.root('dist')
+      outputPath: helpers.root('dist'),
+      proxy: {
+        '/backend/*': {
+          target: METADATA.backendSource,
+          secure: true,
+          prependPath: true,
+          ignorePath: false,
+          hostRewrite: 'localhost:3000/backend',
+          autoRewrite: true,
+          changeOrigin: true,
+          protocolRewrite: 'http',
+          pathRewrite: {
+            '^/backend': ''
+          }
+        }
+      }
     },
 
     /*

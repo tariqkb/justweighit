@@ -1,16 +1,33 @@
+apiKey: bDzX6W4vxFtLaagOdbcGFuRwn98EhblByecswp3v
+
 # use the simple server factory if you only want to run on a single port
 #server:
 #  type: simple
 #  connector:
 #    type: http
 #    port: 8080
-
 server:
 #  softNofileLimit: 1000
 #  hardNofileLimit: 1000
   applicationConnectors:
     - type: http
       port: 8080
+
+jerseyClient:
+  timeout: 500ms
+  connectionTimeout: 500ms
+  timeToLive: 1h
+  cookiesEnabled: false
+  maxConnections: 1024
+  maxConnectionsPerRoute: 1024
+  keepAlive: 0ms
+  retries: 0
+  minThreads: 1
+  maxThreads: 128
+  workQueueSize: 8
+  gzipEnabled: true
+  gzipEnabledForRequests: true
+  chunkedEncodingEnabled: true
 
 # Logging settings.
 logging:

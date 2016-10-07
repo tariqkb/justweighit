@@ -21,8 +21,8 @@
     <bytecodeTargetLevel>
       <module name="backend-backend_main" target="1.8" />
       <module name="backend-backend_test" target="1.8" />
-      <module name="backend_main" target="1.7" />
-      <module name="backend_test" target="1.7" />
+      <module name="backend_main" target="1.8" />
+      <module name="backend_test" target="1.8" />
       <module name="justweighit_main" target="1.8" />
       <module name="justweighit_test" target="1.8" />
     </bytecodeTargetLevel>

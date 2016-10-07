@@ -2,23 +2,14 @@ package com.justweighit.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.List;
+
 public class SearchResponse {
 	
 	@JsonProperty
-	private String ounces;
-	@JsonProperty
-	private String grams;
+	private List<FoodSearchResponse> foods;
 	
-	public SearchResponse(String grams, String ounces) {
-		this.grams = grams;
-		this.ounces = ounces;
-	}
-	
-	public String getGrams() {
-		return grams;
-	}
-	
-	public String getOunces() {
-		return ounces;
+	public SearchResponse(List<FoodSearchResponse> foods) {
+		this.foods = foods;
 	}
 }

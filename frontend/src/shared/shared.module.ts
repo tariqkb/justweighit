@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core/src/metadata/ng_module';
+import {LoadingOverlayComponent} from './loading-overlay/loading-overlay';
 @NgModule({
-  declarations: [],
+  declarations: [LoadingOverlayComponent],
   imports: [],
-  exports: []
+  exports: [LoadingOverlayComponent]
 })
 export class SharedModule {
 

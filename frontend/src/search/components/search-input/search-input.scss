@@ -1,0 +1,134 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+:host {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-left: 10px;
+}
+
+.input-search {
+  margin-left: auto;
+  margin-right: 10px;
+
+  position: relative;
+  flex: 1;
+
+  i {
+    position: absolute;
+    left: 5px;
+    color: $gray9;
+    font-size: 12px;
+    top: 9px;
+  }
+
+  input {
+    border-radius: 10px;
+    font-size: 20px;
+    border: none;
+    padding: 2px 15px;
+    flex: 1;
+  }
+}
+
+$input-height: 40px;
+
+.input-search {
+  display: flex;
+  flex-flow: column nowrap;
+  align-self: stretch;
+}
+
+.input-search {
+
+  &.active {
+    input {
+      background-color: $gray13;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  @include button-dropdown-select();
+  width: auto;
+
+  .dropdown {
+    overflow: auto;
+    top: $input-height - 1;
+    box-shadow: none !important;
+    border-color: $gray9 !important;
+  }
+
+  .entry {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 14px;
+    height: 36px;
+
+    span {
+      flex: 1;
+    }
+  }
+
+}
+
+.member-list {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  //border-right: 1px solid $gray2;
+  //border-top: 1px solid $gray2;
+}
+
+.members {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  flex: 1 0 auto;
+}
+
+.member {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding: 3px 4px;
+  color: $gray4;
+  font-weight: 600;
+  //border-bottom: 1px solid $gray2;
+  border: 1px solid $gray2;
+  border-left: 3px solid red;
+  border-top-left-radius: 2px;
+  //border-bottom-left-radius: 2px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+
+  font-size: 15px;
+
+  i {
+    margin-left: 10px;
+    margin-right: 0;
+    color: $gray2;
+    font-size: 12px;
+
+    cursor: pointer;
+  }
+}
+
+.no-members {
+  padding: 0 4px;
+  color: $gray4;
+  font-weight: 300;
+  font-size: 17px;
+}
+
+.entry {
+  &:hover .edit-button,
+  &:hover .delete-button {
+    opacity: 1;
+  }
+}
+
