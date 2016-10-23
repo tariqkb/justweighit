@@ -23,8 +23,14 @@
       <module name="backend-backend_test" target="1.8" />
       <module name="backend_main" target="1.8" />
       <module name="backend_test" target="1.8" />
+      <module name="database_main" target="1.5" />
+      <module name="database_test" target="1.5" />
+      <module name="etl_main" target="1.8" />
+      <module name="etl_test" target="1.8" />
       <module name="justweighit_main" target="1.8" />
       <module name="justweighit_test" target="1.8" />
+      <module name="util_main" target="1.5" />
+      <module name="util_test" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

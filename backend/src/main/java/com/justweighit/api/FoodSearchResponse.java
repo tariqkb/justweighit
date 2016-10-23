@@ -11,9 +11,8 @@ public class FoodSearchResponse {
 	@JsonProperty
 	private String grams;
 	
-	public FoodSearchResponse(String ndbno, String name, String grams) {
+	public FoodSearchResponse(String ndbno, String name) {
 		this.ndbno = ndbno;
 		this.name = name;
-		this.grams = grams;
 	}
 }

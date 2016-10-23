@@ -14,6 +14,7 @@ public class NDBClient {
 	public final static String NDB_URL = "http://api.nal.usda.gov/ndb";
 	public final static String NDB_SEARCH = "search";
 	public final static String NDB_REPORTS = "reports";
+	public final static String NDB_LIST = "list";
 	
 	private final Logger logger = Logger.getLogger(NDBClient.class.getName());
 	private final String apiKey;

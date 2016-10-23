@@ -13,6 +13,21 @@ server:
     - type: http
       port: 8080
 
+database:
+  driverClass: org.postgresql.Driver
+  user: jwi
+  password:
+  url: jdbc:postgresql://localhost:5432/justweighit
+  properties:
+    charSet: UTF-8
+  maxWaitForConnection: 1s
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+  validationQueryTimeout: 3s
+  minSize: 8
+  maxSize: 32
+  checkConnectionWhileIdle: false
+  minIdleTime: 1 minute
+
 jerseyClient:
   timeout: 500ms
   connectionTimeout: 500ms

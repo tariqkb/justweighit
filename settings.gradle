@@ -1,3 +1,6 @@
 rootProject.name = 'justweighit'
 include 'backend'
+include 'etl'
+include 'database'
+include 'util'
 
