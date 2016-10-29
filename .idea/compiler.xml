@@ -29,8 +29,10 @@
       <module name="etl_test" target="1.8" />
       <module name="justweighit_main" target="1.8" />
       <module name="justweighit_test" target="1.8" />
-      <module name="util_main" target="1.5" />
-      <module name="util_test" target="1.5" />
+      <module name="search_main" target="1.8" />
+      <module name="search_test" target="1.8" />
+      <module name="util_main" target="1.8" />
+      <module name="util_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

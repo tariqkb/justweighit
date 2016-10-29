@@ -14,6 +14,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/justweighit.iml" filepath="$PROJECT_DIR$/.idea/modules/justweighit.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/justweighit_main.iml" filepath="$PROJECT_DIR$/.idea/modules/justweighit_main.iml" group="justweighit" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/justweighit_test.iml" filepath="$PROJECT_DIR$/.idea/modules/justweighit_test.iml" group="justweighit" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/search/search.iml" filepath="$PROJECT_DIR$/.idea/modules/search/search.iml" group="search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/search/search_main.iml" filepath="$PROJECT_DIR$/.idea/modules/search/search_main.iml" group="search" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/search/search_test.iml" filepath="$PROJECT_DIR$/.idea/modules/search/search_test.iml" group="search" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util.iml" group="util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_main.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_main.iml" group="util" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/util/util_test.iml" filepath="$PROJECT_DIR$/.idea/modules/util/util_test.iml" group="util" />

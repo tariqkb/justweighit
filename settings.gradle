@@ -3,4 +3,5 @@ include 'backend'
 include 'etl'
 include 'database'
 include 'util'
+include 'search'
 

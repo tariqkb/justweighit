@@ -17,6 +17,7 @@
     <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.8.4" level="project" />
     <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.8.4" level="project" />
     <orderEntry type="library" name="Gradle: org.postgresql:postgresql:9.4.1211.jre6" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Gradle: org.jetbrains.kotlin:kotlin-runtime:1.0.3" level="project" />
   </component>
