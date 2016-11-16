@@ -6,12 +6,12 @@ public class SearchParameters {
 	
 	private Double amount;
 	private Unit unit;
-	private String foodQuery;
+	private String ndbno;
 	
-	public SearchParameters(Double amount, Unit unit, String foodQuery) {
+	public SearchParameters(Double amount, Unit unit, String ndbno) {
 		this.amount = amount;
 		this.unit = unit;
-		this.foodQuery = foodQuery;
+		this.ndbno = ndbno;
 	}
 	
 	public double getAmount() {
@@ -22,7 +22,7 @@ public class SearchParameters {
 		return unit;
 	}
 	
-	public String getFoodQuery() {
-		return foodQuery;
+	public String getNdbno() {
+		return ndbno;
 	}
 }

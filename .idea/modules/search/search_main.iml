@@ -10,11 +10,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="util_main" />
+    <orderEntry type="module" module-name="database_main" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-core:6.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-queryparser:6.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-suggest:6.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq:3.8.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-codegen:3.8.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.jooq:jooq-meta:3.8.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.postgresql:postgresql:9.4.1211.jre6" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-queries:6.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-sandbox:6.2.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.lucene:lucene-analyzers-common:6.2.1" level="project" />

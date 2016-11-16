@@ -7,13 +7,13 @@ public class SearchExtract {
 	private VolumeType unit;
 	private String itemDescription;
 	
-	public SearchExtract(double amount, VolumeType unit, String itemDescription) {
+	public SearchExtract(Double amount, VolumeType unit, String itemDescription) {
 		this.amount = amount;
 		this.unit = unit;
 		this.itemDescription = itemDescription;
 	}
 	
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 	

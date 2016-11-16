@@ -5,6 +5,7 @@ import com.justweighit.api.SearchRequest;
 import com.justweighit.api.SearchResponse;
 import com.justweighit.ndb.NDBClient;
 import com.justweighit.ndb.NDBSearchResponseWrapper;
+import com.justweighit.units.Unit;
 import com.justweighit.util.SearchExtract;
 import com.justweighit.util.SearchExtractor;
 import com.justweighit.util.TokenizedNDBItem;
@@ -34,6 +35,8 @@ public class SearchResource {
 		
 		SearchExtract extract = new SearchExtractor().extract(request.getText());
 		String itemDescription = extract.getItemDescription();
+		double amount = extract.getAmount();
+		Unit unit = extract.getUnit();
 		
 		NDBSearchResponseWrapper results = ndb.search(itemDescription);
 		
