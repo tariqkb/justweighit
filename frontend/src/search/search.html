@@ -1,11 +1,11 @@
 <div class="search">
   <div class="title">
-    JUST WEIGH IT
+    just weigh it
   </div>
 
-  <search-input></search-input>
+  <search-input (select)="select($event)"></search-input>
 </div>
 
-<div class="results">
-
-</div>
+<food-card [food]="result" [loading]="loading"
+           [class.visible]="loading || result" [class.hidden]="!(loading || result)"
+           [error]="error"></food-card>

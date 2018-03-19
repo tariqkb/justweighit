@@ -5,8 +5,12 @@ package com.justweighit.database.jooq;
 
 
 import com.justweighit.database.jooq.tables.Food;
+import com.justweighit.database.jooq.tables.Nutrient;
+import com.justweighit.database.jooq.tables.NutrientContent;
 import com.justweighit.database.jooq.tables.Weight;
 import com.justweighit.database.jooq.tables.records.FoodRecord;
+import com.justweighit.database.jooq.tables.records.NutrientContentRecord;
+import com.justweighit.database.jooq.tables.records.NutrientRecord;
 import com.justweighit.database.jooq.tables.records.WeightRecord;
 
 import javax.annotation.Generated;
@@ -40,12 +44,15 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<FoodRecord> FOOD_PKEY = UniqueKeys0.FOOD_PKEY;
-    public static final UniqueKey<WeightRecord> WEIGHT_PKEY = UniqueKeys0.WEIGHT_PKEY;
+    public static final UniqueKey<NutrientRecord> NUTRIENT_PKEY = UniqueKeys0.NUTRIENT_PKEY;
+    public static final UniqueKey<NutrientContentRecord> NUTRIENT_CONTENT_PK = UniqueKeys0.NUTRIENT_CONTENT_PK;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
     // -------------------------------------------------------------------------
 
+    public static final ForeignKey<NutrientContentRecord, FoodRecord> NUTRIENT_CONTENT__NUTRIENT_CONTENT_FOOD_NDBNO_FK = ForeignKeys0.NUTRIENT_CONTENT__NUTRIENT_CONTENT_FOOD_NDBNO_FK;
+    public static final ForeignKey<NutrientContentRecord, NutrientRecord> NUTRIENT_CONTENT__NUTRIENT_CONTENT_NUTRIENT_ID_FK = ForeignKeys0.NUTRIENT_CONTENT__NUTRIENT_CONTENT_NUTRIENT_ID_FK;
     public static final ForeignKey<WeightRecord, FoodRecord> WEIGHT__FOOD_WEIGHT_KEY = ForeignKeys0.WEIGHT__FOOD_WEIGHT_KEY;
 
     // -------------------------------------------------------------------------
@@ -54,10 +61,13 @@ public class Keys {
 
     private static class UniqueKeys0 extends AbstractKeys {
         public static final UniqueKey<FoodRecord> FOOD_PKEY = createUniqueKey(Food.FOOD, "food_pkey", Food.FOOD.NDBNO);
-        public static final UniqueKey<WeightRecord> WEIGHT_PKEY = createUniqueKey(Weight.WEIGHT, "weight_pkey", Weight.WEIGHT.NDBNO);
+        public static final UniqueKey<NutrientRecord> NUTRIENT_PKEY = createUniqueKey(Nutrient.NUTRIENT, "nutrient_pkey", Nutrient.NUTRIENT.ID);
+        public static final UniqueKey<NutrientContentRecord> NUTRIENT_CONTENT_PK = createUniqueKey(NutrientContent.NUTRIENT_CONTENT, "nutrient_content_pk", NutrientContent.NUTRIENT_CONTENT.NDBNO, NutrientContent.NUTRIENT_CONTENT.NUTRIENT_ID);
     }
 
     private static class ForeignKeys0 extends AbstractKeys {
+        public static final ForeignKey<NutrientContentRecord, FoodRecord> NUTRIENT_CONTENT__NUTRIENT_CONTENT_FOOD_NDBNO_FK = createForeignKey(com.justweighit.database.jooq.Keys.FOOD_PKEY, NutrientContent.NUTRIENT_CONTENT, "nutrient_content__nutrient_content_food_ndbno_fk", NutrientContent.NUTRIENT_CONTENT.NDBNO);
+        public static final ForeignKey<NutrientContentRecord, NutrientRecord> NUTRIENT_CONTENT__NUTRIENT_CONTENT_NUTRIENT_ID_FK = createForeignKey(com.justweighit.database.jooq.Keys.NUTRIENT_PKEY, NutrientContent.NUTRIENT_CONTENT, "nutrient_content__nutrient_content_nutrient_id_fk", NutrientContent.NUTRIENT_CONTENT.NUTRIENT_ID);
         public static final ForeignKey<WeightRecord, FoodRecord> WEIGHT__FOOD_WEIGHT_KEY = createForeignKey(com.justweighit.database.jooq.Keys.FOOD_PKEY, Weight.WEIGHT, "weight__food_weight_key", Weight.WEIGHT.NDBNO);
     }
 }

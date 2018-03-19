@@ -26,6 +26,7 @@ const METADATA = webpackMerge(commonConfig({env: ENV}).metadata, {
   HMR: HMR,
   backendUrl: '/backend/',
   backendSource: 'http://localhost:8080/'
+  // backendSource: 'https://justweighit.com/backend/'
 });
 
 /**
@@ -56,7 +57,7 @@ module.exports = function(options) {
      * See: http://webpack.github.io/docs/configuration.html#devtool
      * See: https://github.com/webpack/docs/wiki/build-performance#sourcemaps
      */
-    devtool: 'cheap-module-source-map',
+    devtool: 'eval',
 
     /**
      * Options affecting the output of the compilation.
@@ -164,7 +165,7 @@ module.exports = function(options) {
       proxy: {
         '/backend/*': {
           target: METADATA.backendSource,
-          secure: true,
+          secure: false,
           prependPath: true,
           ignorePath: false,
           hostRewrite: 'localhost:3000/backend',

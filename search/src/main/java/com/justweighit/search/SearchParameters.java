@@ -2,19 +2,22 @@ package com.justweighit.search;
 
 import com.justweighit.units.Unit;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public class SearchParameters {
 	
-	private Double amount;
-	private Unit unit;
-	private String ndbno;
+	private final List<NDBSearcherResult> ndbnos;
+	private final BigDecimal amount;
+	private final Unit unit;
 	
-	public SearchParameters(Double amount, Unit unit, String ndbno) {
+	public SearchParameters(BigDecimal amount, Unit unit, List<NDBSearcherResult> ndbnos) {
 		this.amount = amount;
 		this.unit = unit;
-		this.ndbno = ndbno;
+		this.ndbnos = ndbnos;
 	}
 	
-	public double getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 	
@@ -22,7 +25,7 @@ public class SearchParameters {
 		return unit;
 	}
 	
-	public String getNdbno() {
-		return ndbno;
+	public List<NDBSearcherResult> getNdbnos() {
+		return ndbnos;
 	}
 }

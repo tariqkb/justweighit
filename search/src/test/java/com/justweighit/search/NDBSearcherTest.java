@@ -19,7 +19,7 @@ public class NDBSearcherTest {
 			new DatabaseConnector(
 				new DatabaseConfig("jdbc:postgresql://localhost:5432/justweighit", "jwi", "")).connect(),
 			SQLDialect.POSTGRES);
-		this.searcher = new NDBSearcher(context);
+		this.searcher = new NDBSearcher();
 	}
 	
 	@Test

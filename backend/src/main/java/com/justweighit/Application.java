@@ -1,19 +1,17 @@
 package com.justweighit;
 
 import com.justweighit.commands.ImportAll;
-import com.justweighit.ndb.NDBClient;
+import com.justweighit.resources.FoodResource;
 import com.justweighit.resources.SearchResource;
-import io.dropwizard.client.HttpClientBuilder;
-import io.dropwizard.client.JerseyClientBuilder;
+import com.justweighit.search.NDBSearcher;
+import com.justweighit.util.NDBIndex;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.progix.dropwizard.jooq.JooqBundle;
-import org.apache.http.client.HttpClient;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.jooq.SQLDialect;
-
-import javax.ws.rs.client.Client;
-import java.sql.Connection;
+import org.jooq.impl.DSL;
 
 public class Application extends io.dropwizard.Application<Configuration> {
 	
@@ -43,12 +41,18 @@ public class Application extends io.dropwizard.Application<Configuration> {
 	
 	@Override
 	public void run(Configuration configuration, Environment environment) throws Exception {
-		final Client client = new JerseyClientBuilder(environment).using(configuration.getJerseyClientConfiguration())
-			.build(getName());
+		NDBIndex index = new NDBIndex(DSL.using(jooq.getConfiguration()));
+		environment.lifecycle().manage(index);
 		
-		NDBClient ndbClient = new NDBClient(client, configuration.getApiKey());
-	
-		environment.jersey().register(new SearchResource(ndbClient));
+		environment.jersey().register(new AbstractBinder() {
+			@Override
+			protected void configure() {
+				bind(new NDBSearcher(index.getIndex(), index.getAnalyzer(), index.getPayloadSimilarity())).to(NDBSearcher.class);
+			}
+		});
+		
+		environment.jersey().register(SearchResource.class);
+		environment.jersey().register(FoodResource.class);
 	}
 	
 	public JooqBundle<Configuration> getJooq() {

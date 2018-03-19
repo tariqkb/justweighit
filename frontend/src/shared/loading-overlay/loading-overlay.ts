@@ -2,14 +2,17 @@ import {Component, ElementRef, Input, ChangeDetectionStrategy, HostBinding} from
 @Component({
   selector: 'loading-overlay',
   styles: [require('./loading-overlay.scss')],
-  template: `<div><i class="fa fa-circle-o-notch fa-spin-4x"></i></div>`,
+  template: require('./loading-overlay.html'),
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadingOverlayComponent {
 
   //nfs
 	@Input() active: boolean;
-  
+	@Input() error: string;
+	@Input() color: string = "#000000";
+	@Input() size: number = 100;
+
   @HostBinding('class.visible') visible: boolean;
   @HostBinding('class.hidden') hidden: boolean;
 	//nfe
@@ -18,7 +21,7 @@ export class LoadingOverlayComponent {
   }
 
   ngOnChanges() {
-    this.visible = this.active;
+    this.visible = !!this.active;
     this.hidden = !this.active;
   }
 

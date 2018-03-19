@@ -1,7 +1,7 @@
 <div class="input-search" [class.active]="inputActive" (clickout)="clear()">
   <i class="fa fa-search"></i>
   <input type="text" placeholder="Ex. 1/2 cup flour" #searchInput (focus)="onFocus()" (keydown)="onKeydown($event)"
-         [formControl]="searchControl">
+         [formControl]="searchControl" [focus]="true" [timeout]="200">
 
   <div class="dropdown">
     <div class="entry" *ngFor="let result of (results | async)"
@@ -10,10 +10,11 @@
          [title]="result.name">
 
       <span (mousedown)="selectResult(result)">{{result.name}}</span>
-
     </div>
-    <div class="entry" *ngIf="!(results | async)?.foods?.length">Nothing found</div>
-    <loading-overlay [active]="loading | async"></loading-overlay>
+
+    <div class="entry" *ngIf="!(results | async)?.length">Nothing found</div>
+
+    <loading-overlay [active]="loading | async" [size]="40"></loading-overlay>
   </div>
 </div>
 

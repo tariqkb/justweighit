@@ -3,11 +3,8 @@ package com.justweighit.search.units;
 import com.justweighit.units.Unit;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
-import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -21,21 +18,13 @@ import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser.Operator;
-import org.apache.lucene.queryparser.complexPhrase.ComplexPhraseQueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.search.BooleanClause.Occur;
 import org.apache.lucene.search.BooleanQuery.Builder;
-import org.apache.lucene.search.spans.SpanMultiTermQueryWrapper;
-import org.apache.lucene.search.spans.SpanNearQuery;
-import org.apache.lucene.search.spans.SpanOrQuery;
-import org.apache.lucene.search.spans.SpanQuery;
-import org.apache.lucene.search.spans.SpanTermQuery;
-import org.apache.lucene.search.spell.JaroWinklerDistance;
 import org.apache.lucene.search.spell.LuceneLevenshteinDistance;
 import org.apache.lucene.search.spell.PlainTextDictionary;
 import org.apache.lucene.search.spell.SpellChecker;
 import org.apache.lucene.search.spell.StringDistance;
-import org.apache.lucene.search.spell.SuggestWord;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.AttributeFactory;
@@ -44,7 +33,6 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -71,14 +59,16 @@ public class UnitSearcher {
 			addDoc(w, "tsp", Unit.teaspoon);
 			addDoc(w, "tablespoon", Unit.tablespoon);
 			addDoc(w, "tbsp", Unit.tablespoon);
-			addDoc(w, "cups", Unit.cups);
-			addDoc(w, "cup", Unit.cups);
+			addDoc(w, "cup", Unit.cup);
+			addDoc(w, "cup", Unit.cup);
 			addDoc(w, "oz", Unit.ounces);
 			addDoc(w, "ounces", Unit.ounces);
 			addDoc(w, "fluid ounces", Unit.flOz);
 			addDoc(w, "fluid oz", Unit.flOz);
 			addDoc(w, "fl oz", Unit.flOz);
 			addDoc(w, "floz", Unit.flOz);
+			addDoc(w, "g", Unit.grams);
+			addDoc(w, "grams", Unit.grams);
 			w.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
@@ -113,7 +103,7 @@ public class UnitSearcher {
 		return newQuery;
 	}
 	
-	public Query span(String query, float threshold) throws IOException {
+	public Query span(String query, float threshold, List<String> spellCheckedStrings) throws IOException {
 		StandardTokenizer tokenizer = new StandardTokenizer(AttributeFactory.DEFAULT_ATTRIBUTE_FACTORY);
 		tokenizer.setReader(new StringReader(query));
 		tokenizer.reset();
@@ -148,6 +138,7 @@ public class UnitSearcher {
 				if (strings.length > 0) {
 					logger.info("Suggesting '" + Arrays.toString(strings) + "' for " + term);
 					spellCheckedTerms.add(strings[0]);
+					spellCheckedStrings.add(term);
 				} else {
 					logger.info("Not suggesting anything for " + term);
 					spellCheckedTerms.add(term);
@@ -173,21 +164,23 @@ public class UnitSearcher {
 			}
 		}
 	}
-	public List<Unit> run(String queryStr) {
-		List<Unit> units = run(queryStr, 0.8f);
+	
+	public List<UnitWithMatchedString> run(String queryStr) {
+		List<UnitWithMatchedString> units = run(queryStr, 0.8f);
 		
-		if(units.isEmpty()) {
+		if (units.isEmpty()) {
 			return run(queryStr, 0.5f);
 		}
 		
 		return units;
 	}
 	
-	private List<Unit> run(String queryStr, float threshold) {
+	private List<UnitWithMatchedString> run(String queryStr, float threshold) {
 		
 		IndexReader reader = null;
 		try {
-			Query q = span(QueryParser.escape(queryStr), threshold);
+			List<String> spellCheckedTerms = new ArrayList<>();
+			Query q = span(QueryParser.escape(queryStr), threshold, spellCheckedTerms);
 			logger.info("Query: " + q);
 			
 			int hitsPerPage = 10;
@@ -199,7 +192,13 @@ public class UnitSearcher {
 			
 			return Arrays.stream(hits).map(hit -> {
 				try {
-					return Unit.valueOf(searcher.doc(hit.doc).get("id"));
+					List<Term> matchedTerms = new ArrayList<>();
+					getHitTerms(q, searcher, hit.doc, matchedTerms, new ArrayList<>());
+					
+					List<String> matched = matchedTerms.stream().map(Term::text).collect(Collectors.toList());
+					matched.addAll(spellCheckedTerms);
+					
+					return new UnitWithMatchedString(Unit.valueOf(searcher.doc(hit.doc).get("id")), matched);
 				} catch (IOException e) {
 					throw new RuntimeException(e);
 				}
@@ -215,6 +214,39 @@ public class UnitSearcher {
 		}
 	}
 	
+	private void getHitTerms(Query query, IndexSearcher searcher, int docId, List<Term> hitTerms, List<Term> rest) throws IOException {
+		if (query instanceof TermQuery) {
+			if (searcher.explain(query, docId).isMatch()) {
+				hitTerms.add(((TermQuery) query).getTerm());
+			} else {
+				rest.add(((TermQuery) query).getTerm());
+				return;
+			}
+		}
+		
+		if (query instanceof BooleanQuery) {
+			List<BooleanClause> clauses = ((BooleanQuery) query).clauses();
+			if (clauses == null) { return; }
+			
+			for (BooleanClause bc : clauses) {
+				getHitTerms(bc.getQuery(), searcher, docId, hitTerms, rest);
+			}
+			return;
+		}
+		
+		if(query instanceof BoostQuery) {
+			getHitTerms(((BoostQuery) query).getQuery(), searcher, docId, hitTerms, rest);
+		}
+		
+		if (query instanceof MultiTermQuery) {
+//			if (!(query instanceof FuzzyQuery)) {
+				((MultiTermQuery) query).setRewriteMethod(MultiTermQuery.SCORING_BOOLEAN_REWRITE);
+//			}
+			
+			getHitTerms(query.rewrite(searcher.getIndexReader()), searcher, docId, hitTerms, rest);
+		}
+	}
+	
 	private static void addDoc(IndexWriter w, String unitName, Unit unit) throws IOException {
 		Document doc = new Document();
 		doc.add(new TextField("unit", unitName, Field.Store.YES));
@@ -223,11 +255,11 @@ public class UnitSearcher {
 	}
 	
 	public static void debugHits(String query) throws IOException, ParseException {
-		List<Unit> hits = new UnitSearcher().run(query);
+		List<UnitWithMatchedString> hits = new UnitSearcher().run(query);
 		
 		System.out.println(query + " | Found " + hits.size() + " hits");
-		for (Unit hit : hits) {
-			System.out.println(hit);
+		for (UnitWithMatchedString hit : hits) {
+			System.out.println(hit.getUnit());
 		}
 		System.out.println();
 	}

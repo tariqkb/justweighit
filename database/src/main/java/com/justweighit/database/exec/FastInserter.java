@@ -13,6 +13,7 @@ public class FastInserter<R extends Record> {
 	
 	private InsertQuery<R> query;
 	private int rows;
+	private int totalRows;
 	
 	public FastInserter(DSLContext context, Table<R> table, int rowLimit) {
 		this.context = context;
@@ -26,7 +27,6 @@ public class FastInserter<R extends Record> {
 	public void queue(R record) {
 		
 		query.newRecord();
-		query.onDuplicateKeyIgnore(true);
 		query.addRecord(record);
 		rows++;
 		
@@ -40,7 +40,12 @@ public class FastInserter<R extends Record> {
 			query.execute();
 		}
 		query = context.insertQuery(table);
+		totalRows += rows;
 		rows = 0;
+	}
+	
+	public int rows() {
+		return totalRows;
 	}
 	
 }

@@ -3,6 +3,8 @@ package com.justweighit.commands;
 import com.justweighit.Application;
 import com.justweighit.Configuration;
 import com.justweighit.etl.FoodDescriptionImport;
+import com.justweighit.etl.NutrientContentImport;
+import com.justweighit.etl.NutrientImport;
 import com.justweighit.etl.WeightImport;
 import io.dropwizard.cli.ConfiguredCommand;
 import io.dropwizard.setup.Bootstrap;
@@ -12,8 +14,7 @@ import net.sourceforge.argparse4j.inf.Subparser;
 import org.jooq.DSLContext;
 import org.jooq.impl.DSL;
 
-import static com.justweighit.database.jooq.Tables.FOOD;
-import static com.justweighit.database.jooq.Tables.WEIGHT;
+import static com.justweighit.database.jooq.Tables.*;
 
 public class ImportAll extends ConfiguredCommand<Configuration> {
 	
@@ -40,9 +41,13 @@ public class ImportAll extends ConfiguredCommand<Configuration> {
 			.transaction(config -> {
 				DSLContext context = DSL.using(config);
 				context.delete(WEIGHT).execute();
+				context.delete(NUTRIENT_CONTENT).execute();
+				context.delete(NUTRIENT).execute();
 				context.delete(FOOD).execute();
 				new FoodDescriptionImport(context).run();
 				new WeightImport(context).run();
+				new NutrientImport(context).run();
+				new NutrientContentImport(context).run();
 			});
 	}
 	

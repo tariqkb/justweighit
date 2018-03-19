@@ -5,6 +5,7 @@
     <content url="file://$MODULE_DIR$/../../../etl">
       <excludeFolder url="file://$MODULE_DIR$/../../../etl/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/../../../etl/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../etl/out" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -19,7 +19,6 @@ import org.jooq.ForeignKey;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
-import org.jooq.UniqueKey;
 import org.jooq.impl.TableImpl;
 
 
@@ -36,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Weight extends TableImpl<WeightRecord> {
 
-    private static final long serialVersionUID = 1906436019;
+    private static final long serialVersionUID = -1846009651;
 
     /**
      * The reference instance of <code>public.weight</code>
@@ -59,7 +58,7 @@ public class Weight extends TableImpl<WeightRecord> {
     /**
      * The column <code>public.weight.amount</code>.
      */
-    public final TableField<WeightRecord, BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.NUMERIC.nullable(false), this, "");
+    public final TableField<WeightRecord, BigDecimal> AMOUNT = createField("amount", org.jooq.impl.SQLDataType.NUMERIC, this, "");
 
     /**
      * The column <code>public.weight.unit</code>.
@@ -69,7 +68,7 @@ public class Weight extends TableImpl<WeightRecord> {
     /**
      * The column <code>public.weight.description</code>.
      */
-    public final TableField<WeightRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(256).nullable(false), this, "");
+    public final TableField<WeightRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
 
     /**
      * The column <code>public.weight.grams</code>.
@@ -104,22 +103,6 @@ public class Weight extends TableImpl<WeightRecord> {
     @Override
     public Schema getSchema() {
         return Public.PUBLIC;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UniqueKey<WeightRecord> getPrimaryKey() {
-        return Keys.WEIGHT_PKEY;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<UniqueKey<WeightRecord>> getKeys() {
-        return Arrays.<UniqueKey<WeightRecord>>asList(Keys.WEIGHT_PKEY);
     }
 
     /**

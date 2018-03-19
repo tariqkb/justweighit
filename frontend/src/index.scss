@@ -1,13 +1,17 @@
 @import 'variables';
 
+@import url('https://fonts.googleapis.com/css?family=Neucha|Open+Sans');
+@import url("https://use.typekit.net/sdw3xtr.css");
+
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: "effra",sans-serif;
+  //-webkit-font-smoothing: antialiased;
   overflow: hidden;
   box-sizing: border-box !important;
-  background: $color-primary-light;
+  background-image: url("assets/img/background.jpg");
+  background-size:cover;
 }
 
 * {
@@ -18,7 +22,7 @@ input {
   padding: 3px;
   border: 1px solid $gray8;
   outline: none;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "effra",sans-serif;
   -webkit-font-smoothing: antialiased;
   text-shadow: 0 0 1px rgba(0,0,0,0.3);
 }

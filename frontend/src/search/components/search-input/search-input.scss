@@ -20,14 +20,16 @@
     left: 5px;
     color: $gray9;
     font-size: 12px;
-    top: 9px;
+    top: 14px;
   }
 
   input {
+    background: $gray13;
+    margin: 0;
     border-radius: 10px;
     font-size: 20px;
     border: none;
-    padding: 2px 15px;
+    padding: 2px 15px 2px 25px;
     flex: 1;
   }
 }
@@ -44,28 +46,38 @@ $input-height: 40px;
 
   &.active {
     input {
-      background-color: $gray13;
+      background-color: $gray11;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
     }
+
+    .dropdown {
+      padding: 5px 2px;
+    }
+  }
+
+  input {
+    font-weight: 300;
+    font-size: 14px;
   }
 
   @include button-dropdown-select();
   width: auto;
 
   .dropdown {
-    overflow: auto;
+    overflow-y: auto;
     top: $input-height - 1;
     box-shadow: none !important;
     border-color: $gray9 !important;
+    padding: 0;
+    transition: height 200ms;
   }
 
   .entry {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
+    padding: 5px 15px;
     font-size: 14px;
-    height: 36px;
 
     span {
       flex: 1;
@@ -130,5 +142,11 @@ $input-height: 40px;
   &:hover .delete-button {
     opacity: 1;
   }
+}
+
+loading-overlay {
+  top: 0;
+  align-self: center;
+  height: 100%;
 }
 

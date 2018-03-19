@@ -7,10 +7,14 @@ import com.justweighit.etl.reader.NDBFileReader;
 import com.justweighit.etl.reader.NDBRow;
 import org.jooq.DSLContext;
 
+import java.util.logging.Logger;
+
 import static com.justweighit.database.jooq.Tables.FOOD;
 import static com.justweighit.etl.FoodDescriptionImport.FoodDesColumns.*;
 
 public class FoodDescriptionImport {
+	
+	private final Logger logger = Logger.getLogger(getClass().getName());
 	
 	enum FoodDesColumns implements NDBColumn {
 		ndbno, foodGrpCd, longDesc, shortDesc, comName, manufacName, survey, refDesc, refuse, sciName, nFactor, proFactor, fatFactor, choFactor;
@@ -25,6 +29,7 @@ public class FoodDescriptionImport {
 	}
 	
 	public void run() {
+		logger.info("Begin...");
 		try {
 			NDBFileReader reader = new NDBFileReader(DataSource.FOOD_DES);
 			
@@ -35,6 +40,7 @@ public class FoodDescriptionImport {
 			}
 			
 			inserter.insert();
+			logger.info("End (" + inserter.rows() + " rows)");
 		} catch (java.io.IOException e) {
 			throw new RuntimeException(e);
 		}

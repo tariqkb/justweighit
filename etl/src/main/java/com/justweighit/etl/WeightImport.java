@@ -2,6 +2,7 @@ package com.justweighit.etl;
 
 import com.justweighit.database.exec.FastInserter;
 import com.justweighit.database.jooq.tables.records.WeightRecord;
+import com.justweighit.etl.UnitResolver.UnitWithDescription;
 import com.justweighit.etl.reader.NDBColumn;
 import com.justweighit.etl.reader.NDBFileReader;
 import com.justweighit.etl.reader.NDBRow;
@@ -32,6 +33,8 @@ public class WeightImport {
 	}
 	
 	public void run() {
+		logger.info("Begin...");
+		
 		NDBRow elements = null;
 		try {
 			NDBFileReader reader = new NDBFileReader(DataSource.WEIGHT);
@@ -41,6 +44,8 @@ public class WeightImport {
 			}
 			
 			inserter.insert();
+			
+			logger.info("End (" + inserter.rows() + " rows)");
 		} catch (Throwable e) {
 			logger.severe("Failed to process row: " + elements);
 			throw new RuntimeException(e);
@@ -48,16 +53,16 @@ public class WeightImport {
 	}
 	
 	private WeightRecord createRecord(NDBRow elements) {
-		Unit unit = parseUnit(elements.get(WeightColumns.measurement).getStringValue());
+		UnitWithDescription unit = parseUnit(elements.get(WeightColumns.measurement).getStringValue());
 		return new WeightRecord()
 			.setNdbno(elements.get(ndbno).getStringValue())
 			.setAmount(BigDecimal.valueOf(elements.get(amount).getDoubleValue()))
-			.setUnit(unit != null ? unit.id() : null)
-			.setDescription(elements.get(WeightColumns.measurement).getStringValue())
+			.setUnit(unit.getUnit() != null ? unit.getUnit().id() : null)
+			.setDescription(unit.getDescription())
 			.setGrams(BigDecimal.valueOf(elements.get(grams).getDoubleValue()));
 	}
 	
-	private Unit parseUnit(String measurement) {
+	private UnitWithDescription parseUnit(String measurement) {
 		return resolver.resolve(measurement);
 	}
 }

@@ -3,7 +3,7 @@
     <!-- Configure the database connection here -->
     <jdbc>
         <driver>org.postgresql.Driver</driver>
-        <url>jdbc:postgresql://localhost:5432/justweighit</url>
+        <url>jdbc:postgresql://localhost:5432/jwi</url>
         <user>jwi</user>
 
         <!-- You can also pass user/password and other JDBC properties in the optional properties tag: -->

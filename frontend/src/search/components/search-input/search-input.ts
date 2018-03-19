@@ -1,11 +1,15 @@
-import {Component, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, AfterViewInit} from '@angular/core';
+import {
+  Component, ChangeDetectionStrategy, ElementRef, ChangeDetectorRef, AfterViewInit,
+  EventEmitter, Output
+} from '@angular/core';
 import {SearchViewModel} from '../../search-view-model';
 import {Backend} from '../../../shared/backend';
 import {FoodSearchResponse, SearchResponse} from '../../../shared/model';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {FormControl} from '@angular/forms';
 import {ViewChild} from '@angular/core/src/metadata/di';
 import {RequestMethod} from '@angular/http';
+import {Title} from '@angular/platform-browser';
 @Component({
   selector: 'search-input',
   template: require('./search-input.html'),
@@ -14,9 +18,8 @@ import {RequestMethod} from '@angular/http';
 })
 export class SearchInputComponent implements AfterViewInit {
 
-  //nfs
   @ViewChild('searchInput') searchInput: ElementRef;
-  //nfe
+  @Output() select = new EventEmitter<FoodSearchResponse>();
 
   results: Observable<FoodSearchResponse[]>;
   loading: Observable<boolean>;
@@ -24,29 +27,35 @@ export class SearchInputComponent implements AfterViewInit {
   inputActive: boolean = false;
   searchControl: FormControl;
   activeValue: FoodSearchResponse;
+  subs: Subscription[] = [];
 
-  constructor(private backend: Backend, private svm: SearchViewModel, private changeRef: ChangeDetectorRef) {
+  constructor(private backend: Backend, private svm: SearchViewModel, private changeRef: ChangeDetectorRef, private title: Title) {
     this.searchControl = new FormControl();
 
     let searchInputChange = this.searchControl.valueChanges.share();
 
-    this.results = searchInputChange.debounceTime(200).switchMap(text => {
+    this.subs.push(searchInputChange.subscribe(text => {
+      this.inputActive = !!text;
+    }));
+
+    this.results = searchInputChange.debounceTime(500).filter(text => text).switchMap(text => {
       return this.backend.request<SearchResponse>(RequestMethod.Post, 'search', {text}).map(r => r.foods)
         .catch(err => {
           return Observable.of([]);
         });
-    }).cache();
+    }).share();
 
-    this.loading = searchInputChange.map(_ => true).merge(this.results.map(_ => false)).cache();
-
-    setTimeout(() => this.searchControl.setValue(''));
+    this.loading = searchInputChange.map(_ => true).merge(this.results.map(_ => false)).share();
   }
 
   selectResult(val: FoodSearchResponse) {
-
+    this.select.emit(val);
+    this.title.setTitle(this.searchControl.value);
+    this.clear();
   }
 
   clear() {
+    this.activeValue = null;
     this.inputActive = false;
     this.searchControl.setValue('');
   }
@@ -57,14 +66,18 @@ export class SearchInputComponent implements AfterViewInit {
     }
   }
 
-  onFocus() {this.inputActive = true;}
+  onFocus() {
+    if (this.searchControl.value) {
+      this.inputActive = true;
+    }
+  }
 
   ngAfterViewInit() {
     this.configKeyboardNav();
   }
 
   configKeyboardNav() {
-    Observable.fromEvent(this.searchInput.nativeElement, 'keydown').withLatestFrom(this.results).subscribe(res => {
+    this.subs.push(Observable.fromEvent(this.searchInput.nativeElement, 'keydown').withLatestFrom(this.results).subscribe(res => {
       let event = <KeyboardEvent> res[0];
       let results = res[1];
 
@@ -95,7 +108,11 @@ export class SearchInputComponent implements AfterViewInit {
       }
 
       this.changeRef.markForCheck();
-    });
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subs.forEach(sub => sub.unsubscribe());
   }
 
 }

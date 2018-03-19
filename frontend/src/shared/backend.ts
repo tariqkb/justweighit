@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {RequestMethod, Http, Request} from '@angular/http';
+import {RequestMethod, Http, Request, URLSearchParams} from '@angular/http';
 import {Observable} from 'rxjs';
 @Injectable()
 export class Backend {
@@ -10,11 +10,20 @@ export class Backend {
 
   }
 
-  request<T>(method: RequestMethod, url: string, body?: {}): Observable<T> {
+  request<T>(method: RequestMethod, url: string, body?: {}, search?: {}): Observable<T> {
+    let queryParams = null;
+    if(search) {
+      queryParams = new URLSearchParams();
+      Object.keys(search).forEach(key => {
+        queryParams.set(key, search[key]);
+      });
+    }
+
     return this.http.request(new Request({
         method: method,
         url: this.url + url,
-        body: body
+        body: body,
+        search: queryParams
       }
     )).map(response => <T> response.json());
   }

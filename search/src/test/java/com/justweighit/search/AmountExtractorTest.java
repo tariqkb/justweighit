@@ -24,7 +24,7 @@ public class AmountExtractorTest {
 	@Ignore
 	public void testLong() {
 		expect("1/2 cup flour", 0.5);
-		expect("1 / 2 cups flour", 0.5);
+		expect("1 / 2 cup flour", 0.5);
 		expect("0.5 and one cup flour", 0.5);
 		expect("00.5, tabslep soon butter", 0.5);
 		expect("00.50 ?", 0.5);

@@ -5,6 +5,11 @@ package com.justweighit.database.jooq;
 
 
 import com.justweighit.database.jooq.tables.Food;
+import com.justweighit.database.jooq.tables.Nutrient;
+import com.justweighit.database.jooq.tables.NutrientContent;
+import com.justweighit.database.jooq.tables.Recipe;
+import com.justweighit.database.jooq.tables.RecipeFood;
+import com.justweighit.database.jooq.tables.RelatedFood;
 import com.justweighit.database.jooq.tables.Weight;
 
 import java.util.ArrayList;
@@ -31,7 +36,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 1314250097;
+    private static final long serialVersionUID = -78072267;
 
     /**
      * The reference instance of <code>public</code>
@@ -42,6 +47,31 @@ public class Public extends SchemaImpl {
      * The table <code>public.food</code>.
      */
     public final Food FOOD = com.justweighit.database.jooq.tables.Food.FOOD;
+
+    /**
+     * The table <code>public.nutrient</code>.
+     */
+    public final Nutrient NUTRIENT = com.justweighit.database.jooq.tables.Nutrient.NUTRIENT;
+
+    /**
+     * The table <code>public.nutrient_content</code>.
+     */
+    public final NutrientContent NUTRIENT_CONTENT = com.justweighit.database.jooq.tables.NutrientContent.NUTRIENT_CONTENT;
+
+    /**
+     * The table <code>public.recipe</code>.
+     */
+    public final Recipe RECIPE = com.justweighit.database.jooq.tables.Recipe.RECIPE;
+
+    /**
+     * The table <code>public.recipe_food</code>.
+     */
+    public final RecipeFood RECIPE_FOOD = com.justweighit.database.jooq.tables.RecipeFood.RECIPE_FOOD;
+
+    /**
+     * The table <code>public.related_food</code>.
+     */
+    public final RelatedFood RELATED_FOOD = com.justweighit.database.jooq.tables.RelatedFood.RELATED_FOOD;
 
     /**
      * The table <code>public.weight</code>.
@@ -74,6 +104,11 @@ public class Public extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Food.FOOD,
+            Nutrient.NUTRIENT,
+            NutrientContent.NUTRIENT_CONTENT,
+            Recipe.RECIPE,
+            RecipeFood.RECIPE_FOOD,
+            RelatedFood.RELATED_FOOD,
             Weight.WEIGHT);
     }
 }

@@ -8,10 +8,6 @@ import {Component, ChangeDetectionStrategy, ViewEncapsulation} from '@angular/co
 })
 export class AppComponent {
 
-  //nfs
-
-  //nfe
-
   constructor() {
 
   }

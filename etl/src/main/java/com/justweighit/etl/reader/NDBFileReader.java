@@ -39,10 +39,13 @@ public class NDBFileReader extends BufferedReader {
 						StringUtils.startsWith(value, QUOTES) &&
 						StringUtils.endsWith(value, QUOTES)) {
 						
-						element = new NDBElement(value.substring(1, value.length() - 1));
+						element = processString(value);
 					} else {
-						double doubleValue = value.isEmpty() ? 0 : Double.parseDouble(value);
-						element = new NDBElement(doubleValue);
+						try {
+							element = processDouble(value);
+						} catch(NumberFormatException e) {
+							element = processString(value);
+						}
 					}
 					
 					elements.add(element);
@@ -58,5 +61,13 @@ public class NDBFileReader extends BufferedReader {
 			throw new RuntimeException(t);
 		}
 	}
+
+	private NDBElement processString(String value) {
+			return new NDBElement(value.substring(1, value.length() - 1));
+	}
 	
+	private NDBElement processDouble(String value) {
+		double doubleValue = value.isEmpty() ? 0 : Double.parseDouble(value);
+		return new NDBElement(doubleValue);
+	}
 }
