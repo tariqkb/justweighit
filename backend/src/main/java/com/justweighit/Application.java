@@ -1,6 +1,8 @@
 package com.justweighit;
 
 import com.justweighit.commands.ImportAll;
+import com.justweighit.db.JooqBundle;
+import com.justweighit.errors.DefaultExceptionMapper;
 import com.justweighit.resources.FoodResource;
 import com.justweighit.resources.SearchResource;
 import com.justweighit.search.NDBSearcher;
@@ -8,7 +10,6 @@ import com.justweighit.util.NDBIndex;
 import io.dropwizard.db.PooledDataSourceFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.progix.dropwizard.jooq.JooqBundle;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
@@ -18,7 +19,7 @@ public class Application extends io.dropwizard.Application<Configuration> {
 	private final JooqBundle<Configuration> jooq;
 	
 	public Application() {
-		jooq = new JooqBundle<Configuration>() {
+		jooq = new JooqBundle<>() {
 			@Override
 			public PooledDataSourceFactory getDataSourceFactory(Configuration configuration) {
 				return configuration.getDataSourceFactory();
@@ -40,7 +41,7 @@ public class Application extends io.dropwizard.Application<Configuration> {
 	}
 	
 	@Override
-	public void run(Configuration configuration, Environment environment) throws Exception {
+	public void run(Configuration configuration, Environment environment) {
 		NDBIndex index = new NDBIndex(DSL.using(jooq.getConfiguration()));
 		environment.lifecycle().manage(index);
 		
@@ -50,9 +51,10 @@ public class Application extends io.dropwizard.Application<Configuration> {
 				bind(new NDBSearcher(index.getIndex(), index.getAnalyzer(), index.getPayloadSimilarity())).to(NDBSearcher.class);
 			}
 		});
-		
+
 		environment.jersey().register(SearchResource.class);
 		environment.jersey().register(FoodResource.class);
+		environment.jersey().register(DefaultExceptionMapper.class);
 	}
 	
 	public JooqBundle<Configuration> getJooq() {

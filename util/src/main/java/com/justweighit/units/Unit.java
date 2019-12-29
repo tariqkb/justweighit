@@ -21,7 +21,7 @@ public enum Unit {
 		this.converterFn = converterFn;
 		this.prettyName = prettyName;
 	}
-	
+
 	public int id() {
 		return id;
 	}

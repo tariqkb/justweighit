@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 
 public class Configuration extends io.dropwizard.Configuration {
 	
-	
 	@JsonProperty("apiKey")
 	private String apiKey;
 	

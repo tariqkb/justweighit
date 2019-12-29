@@ -1,3 +1,9 @@
+backend/build
+database/build
+search/build
+util/build
+etl/build
+
 
 # Created by https://www.gitignore.io/api/java,gradle,node,osx,intellij,git
 

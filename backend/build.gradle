@@ -1,6 +1,6 @@
 
 buildscript {
-    ext.kotlin_version = '1.0.3'
+    ext.kotlin_version = '1.3.61'
 
     repositories {
         mavenCentral()
@@ -24,7 +24,7 @@ apply plugin: 'org.hidetake.ssh'
 
 distributions {
     main {
-        baseName = 'justweighit'
+        distributionBaseName = 'justweighit'
         contents {
             from ('src/main/resources/config.yml')
             from ('../frontend/dist') {
@@ -62,25 +62,22 @@ task deploy(dependsOn: 'distTar')  {
     }
 }
 
-sourceCompatibility = 1.8
-
 repositories {
     mavenCentral()
     mavenLocal()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile "io.dropwizard:dropwizard-core:1.0.2";
-    compile "io.dropwizard:dropwizard-db:1.0.2";
-    compile "io.dropwizard:dropwizard-assets:1.0.2";
-    compile "io.dropwizard:dropwizard-client:1.0.2";
-    compile "io.progix.dropwizard:dropwizard-jooq:0.2.0";
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "io.dropwizard:dropwizard-core:2.0.0";
+    implementation "io.dropwizard:dropwizard-db:2.0.0";
+    implementation "io.dropwizard:dropwizard-assets:2.0.0";
+    implementation "io.dropwizard:dropwizard-client:2.0.0";
 
-    compile project(':util')
-    compile project(':database')
-    compile project(':etl')
-    compile project(':search')
+    implementation project(':util')
+    implementation project(':database')
+    implementation project(':etl')
+    implementation project(':search')
 }
 
 jar {

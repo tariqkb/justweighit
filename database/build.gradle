@@ -1,26 +1,26 @@
 group 'com.justweighit'
 version '1.0'
 
-apply plugin: 'java'
+apply plugin: 'java-library'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile group: 'org.jooq', name:'jooq', version: '3.8.4', transitive: false
-    compile group: 'org.jooq', name:'jooq-codegen', version: '3.8.4', transitive: false
-    compile group: 'org.jooq', name:'jooq-meta', version: '3.8.4', transitive: false
-    compile 'org.postgresql:postgresql:9.4.1211.jre6'
+    api 'org.jooq:jooq:3.12.3'
+    api 'org.jooq:jooq-codegen:3.12.3'
+    api 'org.jooq:jooq-meta:3.12.3'
+    implementation 'org.postgresql:postgresql:42.2.9.jre7'
+//    compile 'org.postgresql:postgresql:9.4.1211.jre6'
+    implementation project(':util')
 
-    compile project(':util')
-
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testImplementation group: 'junit', name: 'junit', version: '4.11'
 }
 
 task jooq(type: JavaExec) {
 
     classpath = sourceSets.main.runtimeClasspath
-    main = 'org.jooq.util.GenerationTool'
+    main = 'org.jooq.codegen.GenerationTool'
     args = ["src/main/resources/jooq.xml"]
 }

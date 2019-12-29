@@ -8,10 +8,6 @@ import com.justweighit.search.NDBSearcher;
 import com.justweighit.search.SearchParameters;
 import com.justweighit.search.SearchParser;
 import com.justweighit.search.units.UnitSearcher;
-import io.progix.dropwizard.jooq.JooqConfiguration;
-import org.jooq.Configuration;
-import org.jooq.DSLContext;
-import org.jooq.impl.DSL;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -26,11 +22,9 @@ import java.util.stream.Collectors;
 @Produces(MediaType.APPLICATION_JSON)
 public class SearchResource {
 	
-	private final DSLContext context;
 	private final SearchParser searchParser;
 	
-	public SearchResource(@JooqConfiguration Configuration config, @Context NDBSearcher searcher) {
-		this.context = DSL.using(config);
+	public SearchResource(@Context NDBSearcher searcher) {
 		this.searchParser = new SearchParser(new UnitSearcher(), new AmountExtractor(), searcher);
 	}
 	

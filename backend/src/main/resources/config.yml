@@ -14,7 +14,7 @@ server:
 database:
   driverClass: org.postgresql.Driver
   user: jwi
-  password: puttingfoodandweightinthedatabaseain'teasy
+  password: jwi
   url: jdbc:postgresql://localhost:5432/jwi
   properties:
     charSet: UTF-8

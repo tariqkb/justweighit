@@ -1,7 +1,7 @@
 package com.justweighit.util;
 
 import com.justweighit.database.jooq.tables.records.FoodRecord;
-import com.justweighit.database.jooq.tables.records.RelatedFoodRecord;
+//import com.justweighit.database.jooq.tables.records.RelatedFoodRecord;
 import com.justweighit.search.tokens.NDBAnalyzer;
 import com.justweighit.search.tokens.PayloadSimilarity;
 import io.dropwizard.lifecycle.Managed;
@@ -21,7 +21,7 @@ import org.jooq.Result;
 import java.nio.file.Paths;
 
 import static com.justweighit.database.jooq.Tables.FOOD;
-import static com.justweighit.database.jooq.Tables.RELATED_FOOD;
+//import static com.justweighit.database.jooq.Tables.RELATED_FOOD;
 import static com.justweighit.search.NDBSearcher.*;
 
 public class NDBIndex implements Managed {
@@ -57,15 +57,15 @@ public class NDBIndex implements Managed {
 			w.addDocument(doc);
 		}
 		
-		Result<RelatedFoodRecord> relatedFood = context.fetch(RELATED_FOOD);
-		for (RelatedFoodRecord food : relatedFood) {
-			Document doc = new Document();
-			doc.add(new StringField(FIELD_ID, food.getNdbno(), Store.YES));
-			doc.add(new TextField(FIELD_NAME, food.getName(), Store.YES));
-			doc.add(new TextField(FIELD_TERMS, food.getDescription(), Store.YES));
-			doc.add(new StringField(FIELD_Is_RELATED_FOOD, "true", Store.YES));
-			w.addDocument(doc);
-		}
+//		Result<RelatedFoodRecord> relatedFood = context.fetch(RELATED_FOOD);
+//		for (RelatedFoodRecord food : relatedFood) {
+//			Document doc = new Document();
+//			doc.add(new StringField(FIELD_ID, food.getNdbno(), Store.YES));
+//			doc.add(new TextField(FIELD_NAME, food.getName(), Store.YES));
+//			doc.add(new TextField(FIELD_TERMS, food.getDescription(), Store.YES));
+//			doc.add(new StringField(FIELD_Is_RELATED_FOOD, "true", Store.YES));
+//			w.addDocument(doc);
+//		}
 		
 		w.close();
 	}
