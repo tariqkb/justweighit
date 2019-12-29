@@ -1,0 +1,11 @@
+<div class="search">
+  <div class="title">
+    just weigh it
+  </div>
+
+  <jwi-search-input (select)="select($event)"></jwi-search-input>
+</div>
+
+<jwi-food-card [food]="result | async" [loading]="loading"
+           [class.visible]="loading || result" [class.hidden]="!(loading || result)"
+           [error]="error"></jwi-food-card>

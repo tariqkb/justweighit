@@ -1,46 +1,14 @@
-<!DOCTYPE html>
-<html lang="">
+<!doctype html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Frontend</title>
+  <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <title><%= webpackConfig.metadata.title %></title>
-
-  <meta name="description" content="<%= webpackConfig.metadata.title %>">
-
-  <% if (webpackConfig.htmlElements.headTags) { %>
-  <!-- Configured Head Tags  -->
-  <%= webpackConfig.htmlElements.headTags %>
-  <% } %>
-
-  <!-- base url -->
-  <base href="<%= webpackConfig.metadata.baseUrl %>">
-
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Open Sans', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      overflow: hidden;
-      box-sizing: border-box !important;
-      background: #D9D9D9;
-    }
-  </style>
-
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
-
 <body>
-
-  <app></app>
-
-  <% if (webpackConfig.metadata.isDevServer && webpackConfig.metadata.HMR !== true) { %>
-  <!-- Webpack Dev Server reload -->
-  <script src="/webpack-dev-server.js"></script>
-  <% } %>
-
-
+  <app-root></app-root>
 </body>
 </html>

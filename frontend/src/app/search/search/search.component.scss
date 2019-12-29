@@ -1,0 +1,67 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+$width: 70%;
+
+:host {
+  display: flex;
+  flex-flow: column;
+  flex: 1;
+  height: 100%;
+}
+
+.search {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  //background: $color-primary;
+  //background-image: url("assets/img/header-bg.jpg");
+  height: 35%;
+  padding: 0;
+}
+
+
+.title {
+  font-size: 64px;
+  color: $gray12;
+  margin: 30px;
+  text-align: center;
+  text-transform: lowercase;
+
+  font-family: 'Lobster', cursive;
+}
+
+jwi-search-input {
+  width: 60%;
+  height: 40px;
+}
+
+jwi-food-card {
+  width: 70%;
+  align-self: center;
+  margin-bottom: 35px;
+
+  @include animate-visibility-opacity(150ms);
+}
+
+@media (max-width: 425px) {
+  .title {
+    font-size: 32px;
+    margin: 5px;
+  }
+
+  :host jwi-search-input {
+    width: 85%;
+  }
+
+  :host .search {
+    height: 20%;
+  }
+
+  jwi-food-card {
+    width: 90%;
+    overflow: auto;
+  }
+
+}

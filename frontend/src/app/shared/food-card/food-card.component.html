@@ -1,0 +1,64 @@
+<ng-container *ngIf="result">
+  <div class="item-title">
+    {{result.name}}
+    <div class="message" *ngIf="result.message">{{result.message}}</div>
+  </div>
+
+  <div class="content">
+
+    <div class="measurement-options">
+      <div class="measurement" *ngFor="let measurement of result.measurements"
+           (click)="selectMeasurement(measurement)" [class.selected]="selectedMeasurement === measurement"
+           [class.default]="!measurement.description">
+        <div class="amount">{{result.amount}} {{result.unit}}</div>
+        <div class="measurement-description">{{measurement.description}}</div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="selectedMeasurement">
+      <div class="weights">
+        <div class="weights-title">
+          <!--EQUIVALENT WEIGHTS-->
+        </div>
+        <div class="grams">
+          {{selectedMeasurement.grams}}
+          <div class="unit">&nbsp;g</div>
+        </div>
+        <div class="line"></div>
+        <div class="ounces">
+          {{selectedMeasurement.ounces}}
+          <div class="unit">&nbsp;oz</div>
+        </div>
+      </div>
+
+      <div class="nutrition">
+        <div class="calories nutrient">
+          <div class="label">calories</div>
+          {{selectedMeasurement.nutrition.calories}}
+        </div>
+        <div class="carbs nutrient">
+          <div class="label">carbs ({{selectedMeasurement.nutrition.carbsPoC}})</div>
+          {{selectedMeasurement.nutrition.carbs}}g
+        </div>
+        <div class="fat nutrient">
+          <div class="label">fat ({{selectedMeasurement.nutrition.fatPoC}})</div>
+          {{selectedMeasurement.nutrition.fat}}g
+        </div>
+        <div class="protein nutrient">
+          <div class="label">protein ({{selectedMeasurement.nutrition.proteinPoC}})</div>
+          {{selectedMeasurement.nutrition.protein}}g
+        </div>
+        <div class="alcohol nutrient">
+          <div class="label">alcohol ({{selectedMeasurement.nutrition.alcoholPoC}})</div>
+          {{selectedMeasurement.nutrition.alcohol}}g
+        </div>
+        <div class="fiber nutrient">
+          <div class="label">fiber (g)</div>
+          {{selectedMeasurement.nutrition.fiber}}
+        </div>
+      </div>
+    </ng-container>
+
+  </div>
+</ng-container>
+<jwi-loading-overlay [active]="loading" [error]="error"></jwi-loading-overlay>

@@ -1,0 +1,28 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+:host {
+  position: absolute;
+  width: 100%;
+  //height: 100%;
+  z-index: 1;
+
+  background: $white;
+
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+
+  @include animate-visibility-opacity(150ms);
+}
+
+i {
+  font-size: 4em;
+  color: $color-secondary-med;
+}
+
+.error-text {
+  margin-top: 10px;
+  font-size: 18px;
+}
