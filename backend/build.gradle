@@ -113,3 +113,14 @@ public class RunTask extends JavaExec {
         super.exec();
     }
 }
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "12"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "12"
+    }
+}
