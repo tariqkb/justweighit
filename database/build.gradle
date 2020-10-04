@@ -8,10 +8,10 @@ repositories {
 }
 
 dependencies {
-    api 'org.jooq:jooq:3.12.3'
-    api 'org.jooq:jooq-codegen:3.12.3'
-    api 'org.jooq:jooq-meta:3.12.3'
-    implementation 'org.postgresql:postgresql:42.2.9.jre7'
+    api 'org.jooq:jooq:3.13.5'
+    api 'org.jooq:jooq-codegen:3.13.5'
+    api 'org.jooq:jooq-meta:3.13.5'
+    implementation 'org.postgresql:postgresql:42.2.16'
 //    compile 'org.postgresql:postgresql:9.4.1211.jre6'
     implementation project(':util')
 
