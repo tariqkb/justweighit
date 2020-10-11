@@ -1,3 +1,4 @@
+deploy/secrets.yml
 .idea
 backend/build
 database/build

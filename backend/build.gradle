@@ -77,7 +77,7 @@ dependencies {
     implementation project(':util')
     implementation project(':database')
     implementation project(':etl')
-    implementation project(':search')
+    compile project(':search')
 }
 
 jar {

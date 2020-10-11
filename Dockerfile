@@ -1,7 +1,12 @@
 FROM openjdk:14-jdk AS builder
 
-COPY . /src
+COPY .gradle /src/.gradle
+COPY gradle /src/gradle
+COPY gradlew /src/gradlew
 WORKDIR /src
+RUN ./gradlew --no-daemon
+
+COPY . /src
 RUN ./gradlew --no-daemon backend:installDist
 
 FROM openjdk:14-jdk

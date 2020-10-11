@@ -12,21 +12,21 @@ import java.util.List;
 
 public class NDBSearcherTest {
 	
-	private final NDBSearcher searcher;
-	
-	public NDBSearcherTest() throws SQLException {
-		DSLContext context = DSL.using(
-			new DatabaseConnector(
-				new DatabaseConfig("jdbc:postgresql://localhost:5432/justweighit", "jwi", "")).connect(),
-			SQLDialect.POSTGRES);
-		this.searcher = new NDBSearcher();
-	}
-	
-	@Test
-	public void test() {
-		List<NDBSearcherResult> ndbs = searcher.findNdbno("butter");
-		
-		System.out.println("--- Results ---");
-		ndbs.forEach(System.out::println);
-	}
+//	private final NDBSearcher searcher;
+//	
+//	public NDBSearcherTest() throws SQLException {
+//		DSLContext context = DSL.using(
+//			new DatabaseConnector(
+//				new DatabaseConfig("jdbc:postgresql://localhost:5432/justweighit", "jwi", "")).connect(),
+//			SQLDialect.POSTGRES);
+//		this.searcher = new NDBSearcher();
+//	}
+//	
+//	@Test
+//	public void test() {
+//		List<NDBSearcherResult> ndbs = searcher.findNdbno("butter");
+//		
+//		System.out.println("--- Results ---");
+//		ndbs.forEach(System.out::println);
+//	}
 }

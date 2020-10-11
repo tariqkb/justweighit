@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jwi-backend
+  labels:
+    app: jwi-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jwi-backend
+  template:
+    metadata:
+      labels:
+        app: jwi-backend
+    spec:
+      containers:
+      - name: backend
+        image: registry.digitalocean.com/jwi/jwi:latest
+        ports: 
+        - containerPort: 8080
+        env:
+          - name: DATABASE_USER
+            valueFrom: 
+              secretKeyRef:
+                name: database-credentials
+                key: databaseUser
+          - name: DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-credentials
+                key: databasePassword
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: database-credentials
+                key: databaseUrl
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: jwi-api
+spec:
+  type: LoadBalancer
+  selector:
+    app: jwi-backend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
